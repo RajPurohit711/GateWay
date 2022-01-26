@@ -1,0 +1,83 @@
+server:
+  port: 9000
+
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+      routes:
+      - id: loginServiceLoginController
+        uri: http://localhost:8080/
+        predicates:
+        - Path=/login/**
+      - id: loginServicePasswordController
+        uri: http://localhost:8080/
+        predicates:
+        - Path=/password/**
+      - id: loginServiceUserController
+        uri: http://localhost:8080/
+        predicates:
+        - Path=/user/**
+      - id: merchantMicroserviceMerchantDetailController
+        uri: http://localhost:8081/
+        predicates:
+        - Path=/merchant/**
+      - id: merchantMicroserviceMerchantHistoryController
+        uri: http://localhost:8081/
+        predicates:
+        - Path=/merchantHistory/**
+      - id: merchantMicroservicePasswordController
+        uri: http://localhost:8081/
+        predicates:
+        - Path=/password/**
+      - id: productMicroserviceProductController
+        uri: http://localhost:8082/
+        predicates:
+        - Path=/product/**
+      - id: productMicroserviceCategoryController
+        uri: http://localhost:8082/
+        predicates:
+        - Path=/product/category/**
+      - id: orderMicroserviceCartController
+        uri: http://localhost:8083/
+        predicates:
+        - Path=/cart/**
+      - id: orderMicroserviceOrderController
+        uri: http://localhost:8083/
+        predicates:
+        - Path=/order/**
+      - id: searchMicroservice
+        uri: http://localhost:8084/
+        predicates:
+        - Path=/search/**
+#      - id: productMicroservice
+#        uri: http://localhost:8082/
+#        predicates:
+#        - Path=/product/**
+#      - id: categoryMicroservice
+#        uri: http://localhost:8082/
+#        predicates:
+#        - Path=/category/**
+#      - id: cartMicroservice
+#        uri: http://localhost:8084/
+#        predicates:
+#        - Path=/cart/**
+#      - id: orderMicroservice
+#        uri: http://localhost:8084/
+#        predicates:
+#        - Path=/order/**
+#      - id: productMerchantMicroservice
+#        uri: http://localhost:8083/
+#        predicates:
+#        - Path=/productmerchant/**
+#      - id: productMerchantSoldMicroservice
+#        uri: http://localhost:8084/
+#        predicates:
+#        - Path=/productmerchantsold/**
